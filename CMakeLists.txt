@@ -17,7 +17,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(libobs CONFIG REQUIRED)
 find_package(obs-frontend-api CONFIG REQUIRED)
-find_package(Qt6 6.8.3 EXACT CONFIG REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 6.8.3 CONFIG REQUIRED COMPONENTS Core Widgets)
 
 add_library(playlistdock-ui STATIC src/PlaylistDock.cpp src/PlaylistDock.hpp src/RevealFile.cpp src/RevealFile.hpp)
 set_target_properties(playlistdock-ui PROPERTIES AUTOMOC ON POSITION_INDEPENDENT_CODE ON)

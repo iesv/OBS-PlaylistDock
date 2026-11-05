@@ -5,8 +5,8 @@
 #include <QPointer>
 #include <QSet>
 
-#if LIBOBS_API_VER != MAKE_SEMANTIC_VERSION(32, 0, 4)
-#error Build OBS-PlaylistDock against the OBS 32.0.4 headers.
+#if LIBOBS_API_MAJOR_VER != 32
+#error Build OBS-PlaylistDock against OBS 32.x headers.
 #endif
 
 OBS_DECLARE_MODULE()
@@ -100,12 +100,12 @@ void frontendEvent(obs_frontend_event event, void *)
 
 bool obs_module_load()
 {
-    if (obs_get_version() != MAKE_SEMANTIC_VERSION(32, 0, 4)) {
-        blog(LOG_ERROR, "[OBS-PlaylistDock] This build requires OBS 32.0.4.");
+    if ((obs_get_version() >> 24) != 32) {
+        blog(LOG_ERROR, "[OBS-PlaylistDock] This build requires OBS 32.x.");
         return false;
     }
-    if (QString::fromLatin1(qVersion()) != QStringLiteral("6.8.3")) {
-        blog(LOG_ERROR, "[OBS-PlaylistDock] This build requires Qt 6.8.3; runtime is %s.", qVersion());
+    if (!QString::fromLatin1(qVersion()).startsWith(QStringLiteral("%1.%2.").arg(QT_VERSION_MAJOR).arg(QT_VERSION_MINOR))) {
+        blog(LOG_ERROR, "[OBS-PlaylistDock] This build requires Qt %d.%d.x; runtime is %s.", QT_VERSION_MAJOR, QT_VERSION_MINOR, qVersion());
         return false;
     }
     char *configPath = obs_module_config_path("settings.json");
